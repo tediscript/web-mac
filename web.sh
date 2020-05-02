@@ -29,6 +29,7 @@ function site_enable()
     ln -fs /usr/local/etc/nginx/sites-available/${3} /usr/local/etc/nginx/sites-enabled/${3}
     brew services reload nginx
     echo "${3} enabled!"
+    echo ""
 }
 
 function site_disable()
@@ -38,6 +39,7 @@ function site_disable()
     rm -f /usr/local/etc/nginx/sites-enabled/${3} 2> /dev/null
     brew services reload nginx
     echo "${3} disabled!"
+    echo ""
 }
 
 function site_create_database()
@@ -403,15 +405,20 @@ function install()
     echo "install nginx..."
     if [ "$(brew info nginx | grep 'Not installed')" == "Not installed" ]; then
         brew install nginx
-        cd /usr/local/etc/nginx \
-            && sed "s/include servers/include site-enabled/g" nginx.conf.default > nginx.conf \
-            && mkdir -p sites-available \
-            && mkdir -p sites-enabled
-        brew services start nginx
         echo "nginx installed!"
     else
         echo "nginx already installed!"
     fi
+
+    #configure nginx
+    echo ""
+    echo "configure nginx..."
+    cd /usr/local/etc/nginx \
+        && sed "s/include servers/include sites-enabled/g" nginx.conf.default > nginx.conf \
+        && mkdir -p sites-available \
+        && mkdir -p sites-enabled
+    brew services reload nginx
+    echo "nginx configured!"
 
     #install composer
     echo ""
