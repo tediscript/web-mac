@@ -368,25 +368,39 @@ function install()
 {
     echo ""
     echo "install web mac..."
-    echo ""
 
+    echo ""
+    echo "install web.sh script..."
     mkdir -p ~/.web-mac
     cp web.sh ~/.web-mac/web.sh
     ln -sf ~/.web-mac/web.sh /usr/local/bin/web
+    echo "script installed!"
 
     #install mariadb
+    echo ""
+    echo "install mariadb..."
     if [ "$(brew info mariadb | grep 'Not installed')" == "Not installed" ]; then
         brew install mariadb
         brew services start mariadb
+        echo "mariadb installed!"
+    else
+        echo "mariadb already installed!"
     fi
 
     #install php
+    echo ""
+    echo "install php..."
     if [ "$(brew info php | grep 'Not installed')" == "Not installed" ]; then
         brew install php
         brew services start php
+        echo "php installed!"
+    else
+        echo "php already installed!"
     fi
 
     #install nginx
+    echo ""
+    echo "install nginx..."
     if [ "$(brew info nginx | grep 'Not installed')" == "Not installed" ]; then
         brew install nginx
         cd /usr/local/etc/nginx \
@@ -394,16 +408,29 @@ function install()
             && mkdir -p sites-available \
             && mkdir -p sites-enabled
         brew services start nginx
+        echo "nginx installed!"
+    else
+        echo "nginx already installed!"
     fi
 
     #install composer
+    echo ""
+    echo "install composer..."
     if [ "$(brew info composer | grep 'Not installed')" == "Not installed" ]; then
         brew install composer
+        echo "composer installed!"
+    else
+        echo "composer already installed!"
     fi
 
     #install node
+    echo ""
+    echo "install node..."
     if [ "$(brew info node | grep 'Not installed')" == "Not installed" ]; then
         brew install node
+        echo "node installed!"
+    else
+        echo "node already installed!"
     fi
 
     echo ""
@@ -444,8 +471,11 @@ function uninstall()
     echo "node uninstalled!"
 
     #remove installation
+    echo ""
+    echo "remove web.sh script..."
     rm -f /usr/local/bin/web
     rm -Rf ~/.web-mac
+    echo "web.sh removed!"
     
     echo ""
     echo "web uninstalled!"
