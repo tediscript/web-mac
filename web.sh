@@ -277,7 +277,7 @@ function site_delete_nginx_conf()
 {
     echo ""
     echo "delete nginx conf ${3}..."
-    rm -f /usr/local/etc/nginx/sites-available/${1} 2> /dev/null
+    rm -f /usr/local/etc/nginx/sites-available/${3} 2> /dev/null
     echo "nginx conf ${3} deleted!"
 }
 
